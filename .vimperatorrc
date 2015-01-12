@@ -1,0 +1,39 @@
+" Hintモードでアルファベット使用
+set hintchars=hjklasdfgyuiopqwertnmzxcvb 
+
+" 移動幅
+noremap j 3j
+noremap k 3k
+
+"h/lで戻る/進む
+noremap h <A-Left>
+noremap l <A-Right>
+
+" OSのキーバインドを再現 
+noremap <C-a> i<C-a>
+noremap <C-c> i<C-c>
+
+inoremap <C-a> <Ins><C-a><Ins>
+inoremap <C-c> <Ins><C-c><Ins>
+inoremap <C-v> <Ins><C-v><Ins>
+inoremap <C-x> <Ins><C-x><Ins>
+inoremap <C-z> <Ins><C-z><Ins>
+inoremap <C-Space> <Ins><C-Space><Ins>
+
+cnoremap <C-a> i<C-a>
+cnoremap <C-c> i<C-c>
+cnoremap <C-v> i<C-v>
+cnoremap <C-x> i<C-x>
+cnoremap <C-z> i<C-z>
+
+
+"============================
+" colorscheme
+"============================
+" デフォルトのヒント派手すぎ＞＜
+hi Hint font-family: Arial; font-size: 21px; font-weight: bold; text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black, 1px 1px 2px black; color: #33cccc;
+hi HintElem color: gray; background-color: #a1e4e6;
+hi HintActive color: black; background-color: #ff8700;
+
+" デフォルトのエラー赤くてこわい＞＜
+hi ErrorMsg color:white; background-color: #ec6aa1;

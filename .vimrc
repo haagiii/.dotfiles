@@ -6,6 +6,8 @@ set showmode
 set shiftwidth=4
 set softtabstop =4
 set visualbell t_vb =
+set hlsearch
+nmap <ESC><ESC> :nohl<CR><ESC>
 
 "---------------------------------------------------------------------------
 " 検索の挙動に関する設定:
@@ -57,9 +59,9 @@ set nobackup
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ビジュアル選択(D&D他)を自動的にクリップボードへ (:help guioptions_a)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set guioptions+=a
+set guioptions+=a
 set clipboard+=autoselect
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "escの連打で検索のハイライトを解除

@@ -34,6 +34,8 @@ set wildmenu
 set formatoptions+=mM
 
 set ambiwidth=double
+
+set autochdir
 "---------------------------------------------------------------------------
 " GUI固有ではない画面表示の設定:
 " 行番号を非表示 (number:表示)
@@ -78,25 +80,22 @@ set virtualedit=block
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 inoreabbrev dl /*------------------------------------------*/
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "ノーマルモードでEnter改行
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 noremap <CR> o<ESC>
 
-
 "neocomplecache
 "
-""起動時に有効化
-
-let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-	let g:neocomplcache_omni_patterns = {}
-endif
-
-let g:neocomplcache_omni_patterns.ruby = '[^. *¥t]¥.¥w*¥|¥h¥w*::'
+"起動時に有効化
+" let g:neocomplcache_enable_at_startup = 1
+" 
+" " Enable heavy omni completion.
+" if !exists('g:neocomplcache_omni_patterns')
+" 	let g:neocomplcache_omni_patterns = {}
+" endif
+" 
+" let g:neocomplcache_omni_patterns.ruby = '[^. *¥t]¥.¥w*¥|¥h¥w*::'
 
 "autocmd FileType ruby
 setlocal omnifunc=rubycomplete#Complete
@@ -149,11 +148,14 @@ filetype plugin indent on
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_ignore_case = 1
 let g:neocomplete#force_overwrite_completefunc = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#max_list = 10
+
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
 " setting of VimFiler
 let g:vimfiler_as_default_explorer=1
@@ -168,3 +170,4 @@ au Syntax * RainbowParenthesesLoadSquare
 " docstringは表示しない
 autocmd FileType clojure setlocal completeopt-=preview
 
+" let g:neocomplete#sources#omni#functions.clojure = \ 'vimclojure#OmniCompletion'

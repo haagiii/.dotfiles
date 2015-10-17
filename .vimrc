@@ -51,7 +51,7 @@ set cmdheight=2
 " コマンドをステータス行に表示
 set showcmd
 " タイトルを表示
-set title
+set notitle
 
 "---------------------------------------------------------------------------
 " ファイル操作に関する設定:
@@ -139,6 +139,9 @@ NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'tpope/vim-classpath'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
 
 call neobundle#end()
 
@@ -169,5 +172,8 @@ au Syntax * RainbowParenthesesLoadSquare
 
 " docstringは表示しない
 autocmd FileType clojure setlocal completeopt-=preview
+
+au BufRead,BufNewFile *.md set filetype=markdown
+let g:previm_open_cmd = 'open -a Firefox'
 
 " let g:neocomplete#sources#omni#functions.clojure = \ 'vimclojure#OmniCompletion'

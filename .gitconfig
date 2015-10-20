@@ -3,3 +3,5 @@
 [user]
 	email = hagiwara.kouji@gmail.com
 	name = haagiii
+[push]
+	default = matching

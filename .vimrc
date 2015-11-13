@@ -35,6 +35,14 @@ set formatoptions+=mM
 
 set ambiwidth=double
 
+" 対応括弧に'<'と'>'のペアを追加
+set matchpairs& matchpairs+=<:>
+
+set nowritebackup
+set nobackup
+set noswapfile
+
+
 " set autochdir
 "---------------------------------------------------------------------------
 " GUI固有ではない画面表示の設定:

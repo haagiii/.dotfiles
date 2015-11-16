@@ -117,7 +117,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
-PATH="$PATH:~/bin"
+# PATH="$PATH:~/bin"
 
 # include files.
 . ~/.lein/bash_completion.bash

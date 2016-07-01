@@ -1,3 +1,5 @@
+colorscheme koehler
+
 set number
 set ruler
 set cursorline
@@ -40,7 +42,6 @@ set matchpairs& matchpairs+=<:>
 set nowritebackup
 set nobackup
 set noswapfile
-
 
 " set autochdir
 "---------------------------------------------------------------------------
@@ -92,8 +93,9 @@ inoreabbrev dl /*------------------------------------------*/
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 noremap <CR> o<ESC>
 
-" let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-" let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+let &t_SI .= "\e[5 q"
+let &t_EI .= "\e[1 q"
+
 
 "neocomplecache
 "
@@ -139,11 +141,11 @@ NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'git://github.com/Shougo/neocomplete.git'
+NeoBundle 'https://github.com/Shougo/neocomplete.git'
 " NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 " NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/thinca/vim-quickrun.git'
-NeoBundle 'git://github.com/liquidz/lein-vim.git'
+NeoBundle 'https://github.com/thinca/vim-quickrun.git'
+NeoBundle 'https://github.com/liquidz/lein-vim.git'
 NeoBundle 'YankRing.vim'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
@@ -155,6 +157,8 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'Shougo/unite-outline.git'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'rhysd/vim-operator-surround'
+NeoBundle 'thinca/vim-ft-clojure.git'
+NeoBundle 'nathanaelkane/vim-indent-guides.git'
 NeoBundle 'davidhalter/jedi-vim'
 
 NeoBundleLazy "davidhalter/jedi-vim", {
@@ -164,12 +168,14 @@ NeoBundleLazy "davidhalter/jedi-vim", {
       \ "build": {
       \   "mac": "pip install jedi",
       \   "unix": "pip install jedi",
-      \ }}
+      \ }
+	  \}
 let s:hooks = neobundle#get_hooks("jedi-vim")
 function! s:hooks.on_source(bundle)
+	let g:jedi#auto_initialization = 1
+    let g:jedi#auto_vim_configuration = 1
 	" jediにvimの設定を任せると'completeopt+=preview'するので
 	" 自動設定機能をOFFにし手動で設定を行う
-	let g:jedi#auto_vim_configuration = 0
 	let g:jedi#auto_vim_configuration = 0
 	" 補完の最初の項目が選択された状態だと使いにくいためオフにする
 	let g:jedi#popup_select_first = 0
@@ -180,8 +186,14 @@ function! s:hooks.on_source(bundle)
 
 " docstringは表示しない
 autocmd FileType python setlocal completeopt-=preview
-endfunction
 
+" インデントのカラー表示
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_start_level = 1
+let g:indent_guides_guide_size = 1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+endfunction
 
 call neobundle#end()
 
@@ -196,19 +208,21 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#max_list = 10
 
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 
 " setting of VimFiler
-let g:vimfiler_as_default_explorer=1
+let g:vimfiler_as_default_explorer = 1
 nnoremap <C-f> :VimFilerCurrentDir<CR>
 inoremap <C-f> <ESC>:VimFilerCurrentDir<CR>
 
 " rainbow_parentheses.vimの括弧の色付けを有効化
-au VimEnter * RainbowParenthesesToggle
+" au VimEnter,ColorScheme * RainbowParenthesesToggle
+au ColorScheme * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 " docstringは表示しない
 autocmd FileType clojure setlocal completeopt-=preview
@@ -222,3 +236,4 @@ let g:previm_open_cmd = 'open -a Firefox'
 map <silent>sa <Plug>(operator-surround-append)
 map <silent>sd <Plug>(operator-surround-delete)
 map <silent>sr <Plug>(operator-surround-replace)
+

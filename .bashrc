@@ -38,6 +38,9 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
+    xterm-256color) color_prompt=yes;;
+    screen) color_prompt=yes;;
+    screen-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -68,7 +71,8 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls -ali --color=always | less'
+    # alias ls='ls -ali --color=always | less'
+    alias ls='ls -ali --color=always'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -89,6 +93,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+export LESS='-N -R'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -111,7 +117,7 @@ git_branch() {
 }
 
 if [ "$color_prompt" = yes ]; then
-	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(git_branch)$(hg_branch)\n\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]$(git_branch)$(hg_branch)\n\$ '
 else
 	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(git_branch)$(hg_branch)\n\$ '
 fi
@@ -119,7 +125,17 @@ unset color_prompt force_color_prompt
 
 # PATH="$PATH:~/bin"
 
-# include files.
+# setting clojure
 . ~/.lein/bash_completion.bash
 
-export LESS='-N -R'
+# setting python
+export PYENV_ROOT="${HOME}/.pyenv"
+if [ -n ${PYENV_ROOT} ]; then
+	path=(${PYENV_ROOT}/bin ${PYENV_ROOT}/shims ${path})
+fi
+eval "$(pyenv init -)"
+
+# setting ruby
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+. ~/.rbenv/completions/rbenv.bash

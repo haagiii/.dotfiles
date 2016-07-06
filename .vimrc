@@ -9,6 +9,7 @@ set shiftwidth=4
 set softtabstop =4
 set visualbell t_vb =
 set hlsearch
+set expandtab
 
 "---------------------------------------------------------------------------
 " 検索の挙動に関する設定:
@@ -96,21 +97,8 @@ noremap <CR> o<ESC>
 let &t_SI .= "\e[5 q"
 let &t_EI .= "\e[1 q"
 
-
-"neocomplecache
-"
-"起動時に有効化
-" let g:neocomplcache_enable_at_startup = 1
-" 
-" " Enable heavy omni completion.
-" if !exists('g:neocomplcache_omni_patterns')
-" 	let g:neocomplcache_omni_patterns = {}
-" endif
-" 
-" let g:neocomplcache_omni_patterns.ruby = '[^. *¥t]¥.¥w*¥|¥h¥w*::'
-
 "autocmd FileType ruby
-setlocal omnifunc=rubycomplete#Complete
+"setlocal omnifunc=rubycomplete#Complete
 
 set nocompatible
 filetype off
@@ -160,6 +148,24 @@ NeoBundle 'rhysd/vim-operator-surround'
 NeoBundle 'thinca/vim-ft-clojure.git'
 NeoBundle 'nathanaelkane/vim-indent-guides.git'
 NeoBundle 'davidhalter/jedi-vim'
+" 静的解析
+NeoBundle 'scrooloose/syntastic'
+" ドキュメント参照
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'yuku-t/vim-ref-ri'
+" メソッド定義元へのジャンプ
+NeoBundle 'szw/vim-tags'
+" 自動で閉じる
+NeoBundle 'tpope/vim-endwise'
+NeoBundleLazy 'marcus/rsense', {
+      \ 'autoload': {
+      \   'filetypes': 'ruby',
+      \ },
+      \ }
+NeoBundle 'supermomonga/neocomplete-rsense.vim', {
+      \ 'depends': ['Shougo/neocomplete.vim', 'marcus/rsense'],
+      \ }
+
 
 NeoBundleLazy "davidhalter/jedi-vim", {
       \ "autoload": {
@@ -187,6 +193,20 @@ function! s:hooks.on_source(bundle)
 " docstringは表示しない
 autocmd FileType python setlocal completeopt-=preview
 
+" -------------------------------
+" Rsense
+" -------------------------------
+" let g:rsenseHome = '/home/kouji/.rbenv/shims/rsense'
+let g:rsenseUseOmniFunc = 1
+" --------------------------------
+" rubocop
+" --------------------------------
+" syntastic_mode_mapをactiveにするとバッファ保存時にsyntasticが走る
+" active_filetypesに、保存時にsyntasticを走らせるファイルタイプを指定する
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
+
+
 " インデントのカラー表示
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_start_level = 1
@@ -200,6 +220,15 @@ call neobundle#end()
 " Required:
 filetype plugin indent on
 
+" --------------------------------
+" neocomplete.vim
+" --------------------------------
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_smart_case = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_ignore_case = 1
 let g:neocomplete#force_overwrite_completefunc = 1

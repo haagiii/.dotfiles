@@ -70,9 +70,9 @@ set nobackup
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ビジュアル選択(D&D他)を自動的にクリップボードへ (:help guioptions_a)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set guioptions+=a
-set clipboard+=autoselect
-set clipboard+=unnamedplus
+" set guioptions+=a
+set clipboard=unnamedplus
+" set clipboard+=autoselect
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "escの連打で検索のハイライトを解除
@@ -96,9 +96,6 @@ noremap <CR> o<ESC>
 
 let &t_SI .= "\e[5 q"
 let &t_EI .= "\e[1 q"
-
-"autocmd FileType ruby
-"setlocal omnifunc=rubycomplete#Complete
 
 set nocompatible
 filetype off
@@ -190,8 +187,10 @@ function! s:hooks.on_source(bundle)
 	" gundoと被るため大文字に変更 (2013-06-24 10:00 追記）
 	let g:jedi#goto_command = '<Leader>G'
 
-" docstringは表示しない
-autocmd FileType python setlocal completeopt-=preview
+let g:quickrun_config = {}
+let g:quickrun_config._={
+      \ 'outputter/buffer/split': ':botright'
+      \ }
 
 " -------------------------------
 " Rsense
@@ -205,7 +204,6 @@ let g:rsenseUseOmniFunc = 1
 " active_filetypesに、保存時にsyntasticを走らせるファイルタイプを指定する
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
 let g:syntastic_ruby_checkers = ['rubocop']
-
 
 " インデントのカラー表示
 let g:indent_guides_auto_colors = 0
@@ -255,14 +253,18 @@ au Syntax * RainbowParenthesesLoadBraces
 
 " docstringは表示しない
 autocmd FileType clojure setlocal completeopt-=preview
+autocmd FileType python setlocal completeopt-=preview
+
 
 au BufRead,BufNewFile *.md set filetype=markdown
 let g:previm_open_cmd = 'open -a Firefox'
 
-" let g:neocomplete#sources#omni#functions.clojure = \ 'vimclojure#OmniCompletion'
 
 " operator mappings
 map <silent>sa <Plug>(operator-surround-append)
 map <silent>sd <Plug>(operator-surround-delete)
 map <silent>sr <Plug>(operator-surround-replace)
+
+" autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
 

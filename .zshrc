@@ -2,6 +2,8 @@
 autoload -U compinit; 
 compinit
 
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
 #------------------------------------------
 # コマンド履歴
 #------------------------------------------
@@ -54,11 +56,11 @@ alias egrep='egrep --color=auto'
 #------------------------------------------
 # setting python
 #------------------------------------------
-export PYENV_ROOT="${HOME}/.pyenv"
-if [ -n ${PYENV_ROOT} ]; then
-	path=(${PYENV_ROOT}/bin ${PYENV_ROOT}/shims ${path})
-fi
-eval "$(pyenv init -)"
+# export PYENV_ROOT="${HOME}/.pyenv"
+# if [ -n ${PYENV_ROOT} ]; then
+# 	path=(${PYENV_ROOT}/bin ${PYENV_ROOT}/shims ${path})
+# fi
+# eval "$(pyenv init -)"
 
 #------------------------------------------
 # setting ruby

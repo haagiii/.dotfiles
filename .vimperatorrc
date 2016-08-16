@@ -1,9 +1,16 @@
 " Hintモードでアルファベット使用
 set hintchars=hjklasdfgyuiopqwertnmzxcvb 
+" 入力欄に自動フォーカスしない
+set focuscontent
+" ビジュアルベルを表示しない
+set visualbell
+highlight Bell display:none
+" :oなどでの補完候補をサーチエンジン、履歴に限定
+set complete=sl
 
 " 移動幅
-noremap j 3j
-noremap k 3k
+noremap j 5j
+noremap k 5k
 
 "h/lで戻る/進む
 noremap h <A-Left>
@@ -25,7 +32,6 @@ cnoremap <C-c> i<C-c>
 cnoremap <C-v> i<C-v>
 cnoremap <C-x> i<C-x>
 cnoremap <C-z> i<C-z>
-
 
 "============================
 " colorscheme
